@@ -1,22 +1,46 @@
 import React from "react";
 import "./ImageCanvas.sass";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useTexture } from "@react-three/drei";
+import { useEffect, useMemo, useRef, useState, useContext } from "react";
+import { ImageContext } from "../../ImageContext";
+import { useTexture, OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import axios from "axios";
 
-const Scene: React.FC<{ vertex: string; fragment: string }> = ({
-  vertex,
-  fragment,
-}) => {
+interface dimensionsProps {
+  width?: number;
+  height?: number;
+}
+
+const Scene: React.FC<{
+  vertex: string;
+  fragment: string;
+  dimensions: dimensionsProps;
+  texture: string;
+}> = ({ vertex, fragment, dimensions, texture }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const canvas = document.querySelector("canvas");
-  const canvasWidth = canvas ? canvas.clientWidth : 4;
-  const canvasHeight = canvas ? canvas.clientHeight : 3;
+  const [imgTexture, setImgTexture] = useState<THREE.Texture | undefined>(
+    useTexture(texture)
+  );
 
-  // Load the noise texture and update the shader uniform
-  /*  const noiseTexture = useTexture("noise2.png"); */
+  const loadTexture = (url: string) => {
+    const loader = new THREE.TextureLoader();
+    return loader.load(url);
+  };
+  useEffect(() => {
+    /* const newTexture = loadTexture(texture);
+    setImgTexture(newTexture);
+    console.log(texture); */
+    if (meshRef.current) {
+      const newTexture = loadTexture(texture);
+      (
+        meshRef.current.material as THREE.ShaderMaterial
+      ).uniforms.iChannel0.value = newTexture;
+    }
+  }, [texture]);
+
+  // Load the texture and update the shader uniform
   useFrame((state) => {
     let time = state.clock.getElapsedTime();
 
@@ -36,19 +60,20 @@ const Scene: React.FC<{ vertex: string; fragment: string }> = ({
       },
       iResolution: {
         type: "v2",
-        value: new THREE.Vector2(),
+        value: new THREE.Vector2(dimensions.width, dimensions.height),
+        /* value: new THREE.Vector2(600, 700), */
       },
-      /*        iChannel0: {
+      iChannel0: {
         type: "t",
-        value: noiseTexture,
-      }, */
+        value: imgTexture,
+      },
     }),
-    []
+    [texture]
   );
 
   return (
     <mesh ref={meshRef}>
-      <planeGeometry args={[canvasWidth, canvasHeight]} />
+      <planeGeometry args={[dimensions.width, dimensions.height]} />
       <shaderMaterial
         uniforms={uniforms}
         vertexShader={vertex}
@@ -59,9 +84,14 @@ const Scene: React.FC<{ vertex: string; fragment: string }> = ({
   );
 };
 const ImageCanvas: React.FC = () => {
+  const { imageCanvas, setImageCanvas } = useContext(ImageContext);
   // State variables to store the vertex and fragment shaders as strings
   const [vertex, setVertex] = useState("");
   const [fragment, setFragment] = useState("");
+  const [imageDimensions, setImageDimensions] = useState({
+    width: 4,
+    height: 3,
+  });
 
   // Fetch the shaders once the component mounts
   useEffect(() => {
@@ -70,13 +100,42 @@ const ImageCanvas: React.FC = () => {
       .get("/vertexShader.glsl", { headers: { "Content-Type": "text/plain" } })
       .then((res) => setVertex(res.data));
     axios.get("/fragmentShader.glsl").then((res) => setFragment(res.data));
-  }, []);
+  }, [imageCanvas]);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = imageCanvas;
+    img.onload = () => {
+      setImageDimensions({
+        width: (img.width * 2) / 3,
+        height: (img.height * 2) / 3,
+      });
+    };
+    console.log(imageDimensions);
+  }, [imageCanvas]);
   if (vertex == "" || fragment == "") return null;
 
   return (
-    <div className="canvas-container">
-      <Canvas id="canvas">
-        <Scene vertex={vertex} fragment={fragment} />
+    <div
+      className="canvas-container"
+      style={{
+        width: imageDimensions.width,
+        height: imageDimensions.height,
+      }}
+    >
+      {/* <img src={imageCanvas} alt={`Uploaded image`} className="image-canvas" /> */}
+      <Canvas
+        id="canvas"
+        key={imageCanvas}
+        orthographic // set the camera to orthographic
+      >
+        <Scene
+          vertex={vertex}
+          fragment={fragment}
+          dimensions={imageDimensions}
+          texture={imageCanvas}
+        />
+        {/* <OrbitControls /> */}
       </Canvas>
     </div>
   );
