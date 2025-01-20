@@ -17,6 +17,7 @@ export interface ImageOptionsInterface {
     value: number;
     label: string;
   };
+  borders: boolean;
 }
 
 export const ImageOptionsContext = createContext<{
@@ -30,6 +31,7 @@ export const ImageOptionsContext = createContext<{
       value: 1,
       label: "Original",
     },
+    borders: false,
   },
   setImageOptions: () => {},
 });

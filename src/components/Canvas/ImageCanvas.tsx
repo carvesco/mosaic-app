@@ -21,8 +21,8 @@ const Scene: React.FC<{
   const meshRef = useRef<THREE.Mesh>(null);
   const [imgTexture] = useState<THREE.Texture | undefined>(useTexture(texture));
   const { imageOptions } = useContext(ImageOptionsContext);
-
   useEffect(() => {
+    console.log("imageOptions", +imageOptions.borders);
     if (meshRef.current) {
       (meshRef.current.material as THREE.ShaderMaterial).uniforms.resx.value =
         imageOptions.width;
@@ -31,6 +31,9 @@ const Scene: React.FC<{
       (
         meshRef.current.material as THREE.ShaderMaterial
       ).uniforms.renderingType.value = imageOptions.rendering.value - 1;
+      (
+        meshRef.current.material as THREE.ShaderMaterial
+      ).uniforms.borders.value = +imageOptions.borders;
     }
   }, [imageOptions]);
 
@@ -72,6 +75,10 @@ const Scene: React.FC<{
       renderingType: {
         type: "f",
         value: imageOptions.rendering.value - 1,
+      },
+      borders: {
+        type: "f",
+        value: +imageOptions.borders,
       },
     }),
     []

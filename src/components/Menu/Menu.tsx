@@ -65,6 +65,7 @@ const Menu = () => {
       </div>
       <div>
         <h3>Mosaic Options</h3>
+        <h4>Type</h4>
         <Select
           values={[imageOptions.rendering]}
           color="#0081a7ff"
@@ -78,6 +79,27 @@ const Menu = () => {
             setImageOptions(newOptions);
           }}
         />
+        <div className="border-checkbox">
+          <h4 style={{ paddingBottom: 1 }}>Borders</h4>
+          <div className="checkbox-wrapper-3">
+            <input
+              disabled={imageOptions.rendering.value === 1 ? true : false}
+              type="checkbox"
+              id="cbx-3"
+              checked={imageOptions.borders}
+              onChange={() => {
+                const newOptions: ImageOptionsInterface = {
+                  ...imageOptions,
+                  borders: !imageOptions.borders,
+                };
+                setImageOptions(newOptions);
+              }}
+            />
+            <label htmlFor="cbx-3" className="toggle">
+              <span></span>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
   );

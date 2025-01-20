@@ -2,6 +2,7 @@
 #define PI 3.14159265359
 #define res 50.
 #define original 1.
+#define bord 1.
 
 uniform vec2 iResolution;
 uniform float iTime;
@@ -10,9 +11,15 @@ uniform sampler2D iChannel0;
 uniform float resx;
 uniform float resy;
 uniform float renderingType;
+uniform float borders;
 
 vec2 random2(vec2 p) {
     return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453);
+}
+
+float sdBox(in vec2 p, in vec2 b) {
+    vec2 d = abs(p) - b;
+    return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
 }
 
 void main() {
@@ -71,6 +78,10 @@ void main() {
     colt = texture(iChannel0, uv);
     if(renderingType > 0.5) {
         colt = texture(iChannel0, textCoord);
+        if(borders > 0.5) {
+            float b = sdBox(fPos, vec2(0.92));
+            colt += step(0.0, b);
+        }
     }
     if(renderingType > 1.5) {
         colt = vec4(m_point.rgb, 1.0);

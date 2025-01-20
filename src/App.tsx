@@ -17,6 +17,7 @@ function App() {
       value: 1,
       label: "Original",
     },
+    borders: false,
   });
   const value = { imageCanvas, setImageCanvas };
   const optionsValue = { imageOptions, setImageOptions };
