@@ -8,7 +8,7 @@ import { ImageOptionsContext } from "./ImageContext";
 
 function App() {
   const [imageCanvas, setImageCanvas] = useState("/1.jpg");
-  const [imageOptions, setImageOptions] = useState({ width: 50, height: 50 });
+  const [imageOptions, setImageOptions] = useState({ width: 20, height: 50 });
   const value = { imageCanvas, setImageCanvas };
   const optionsValue = { imageOptions, setImageOptions };
 

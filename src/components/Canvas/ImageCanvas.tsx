@@ -1,11 +1,12 @@
 import React from "react";
 import "./ImageCanvas.sass";
 import { useEffect, useMemo, useRef, useState, useContext } from "react";
-import { ImageContext } from "../../ImageContext";
+import { ImageContext, ImageOptionsContext } from "../../ImageContext";
 import { useTexture, OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import axios from "axios";
+import { RiContrast2Fill } from "react-icons/ri";
 
 interface dimensionsProps {
   width?: number;
@@ -23,22 +24,22 @@ const Scene: React.FC<{
   const [imgTexture, setImgTexture] = useState<THREE.Texture | undefined>(
     useTexture(texture)
   );
+  const { imageOptions } = useContext(ImageOptionsContext);
 
   const loadTexture = (url: string) => {
     const loader = new THREE.TextureLoader();
     return loader.load(url);
   };
+
   useEffect(() => {
-    /* const newTexture = loadTexture(texture);
-    setImgTexture(newTexture);
-    console.log(texture); */
     if (meshRef.current) {
-      const newTexture = loadTexture(texture);
-      (
-        meshRef.current.material as THREE.ShaderMaterial
-      ).uniforms.iChannel0.value = newTexture;
+      (meshRef.current.material as THREE.ShaderMaterial).uniforms.resx.value =
+        imageOptions.width;
+      (meshRef.current.material as THREE.ShaderMaterial).uniforms.resy.value =
+        imageOptions.height;
     }
-  }, [texture]);
+    console.log(imageOptions.width);
+  }, [imageOptions]);
 
   // Load the texture and update the shader uniform
   useFrame((state) => {
@@ -67,8 +68,16 @@ const Scene: React.FC<{
         type: "t",
         value: imgTexture,
       },
+      resx: {
+        type: "f",
+        value: imageOptions.width,
+      },
+      resy: {
+        type: "f",
+        value: imageOptions.height,
+      },
     }),
-    [texture]
+    []
   );
 
   return (
