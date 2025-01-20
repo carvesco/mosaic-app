@@ -12,6 +12,10 @@ const renderingOptions = [
     value: 2,
     label: "Tiled",
   },
+  {
+    value: 3,
+    label: "Tiled-Voronoi",
+  },
 ];
 
 const Menu = () => {
@@ -27,7 +31,7 @@ const Menu = () => {
           type="range"
           className="slider"
           min={20}
-          max={200}
+          max={100}
           disabled={imageOptions.rendering.value === 1 ? true : false}
           value={imageOptions.width}
           onChange={(e) => {
@@ -47,7 +51,7 @@ const Menu = () => {
           className="slider"
           disabled={imageOptions.rendering.value === 1 ? true : false}
           min={20}
-          max={200}
+          max={100}
           value={imageOptions.height}
           onChange={(e) => {
             const newOptions: ImageOptionsInterface = {

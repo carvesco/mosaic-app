@@ -11,7 +11,7 @@ function App() {
   const [imageCanvas, setImageCanvas] = useState("/1.jpg");
   let currentYear = new Date().getFullYear();
   const [imageOptions, setImageOptions] = useState({
-    width: 20,
+    width: 50,
     height: 50,
     rendering: {
       value: 1,
