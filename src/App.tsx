@@ -4,10 +4,13 @@ import "./App.sass";
 import Menu from "./components/Menu/Menu";
 import ImageCanvas from "./components/Canvas/ImageCanvas";
 import { ImageContext } from "./ImageContext";
+import { ImageOptionsContext } from "./ImageContext";
 
 function App() {
   const [imageCanvas, setImageCanvas] = useState("/1.jpg");
+  const [imageOptions, setImageOptions] = useState({ width: 50, height: 50 });
   const value = { imageCanvas, setImageCanvas };
+  const optionsValue = { imageOptions, setImageOptions };
 
   return (
     <>
@@ -15,8 +18,10 @@ function App() {
       <p>Convert the image you want into a mosaic with different options.</p>
       <div className="menu-canvas-container">
         <ImageContext.Provider value={value}>
-          <Menu />
-          <ImageCanvas />
+          <ImageOptionsContext.Provider value={optionsValue}>
+            <Menu />
+            <ImageCanvas />
+          </ImageOptionsContext.Provider>
         </ImageContext.Provider>
       </div>
     </>
