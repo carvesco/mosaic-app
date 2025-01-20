@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { AiOutlineCheckCircle, AiOutlineCloudUpload } from "react-icons/ai";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 import { MdClear } from "react-icons/md";
 import "./UploadImage.sass";
 import { ImageContext } from "../../../ImageContext";
@@ -19,8 +19,7 @@ const UploadImage: React.FC<UploadImageProps> = ({
   height,
 }) => {
   const [image, setImage] = useState<File>();
-  const [imageURLs, setImageURLs] = useState<string>();
-  const { imageCanvas, setImageCanvas } = useContext(ImageContext);
+  const { setImageCanvas } = useContext(ImageContext);
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -29,7 +28,6 @@ const UploadImage: React.FC<UploadImageProps> = ({
       const newFiles = Array.from(selectedFiles);
       setImage(newFiles[0]);
       const newImageURL = URL.createObjectURL(newFiles[0]);
-      setImageURLs(newImageURL);
       setImageCanvas(newImageURL);
     }
   };
@@ -42,7 +40,6 @@ const UploadImage: React.FC<UploadImageProps> = ({
       const newFiles = Array.from(selectedFiles);
       setImage(newFiles[0]);
       const newImageURL = URL.createObjectURL(newFiles[0]);
-      setImageURLs(newImageURL);
       setImageCanvas(newImageURL);
     }
   };

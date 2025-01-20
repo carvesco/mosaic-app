@@ -2,9 +2,12 @@ import { createContext } from "react";
 
 const defaultImage = "/1.jpg";
 
-export const ImageContext = createContext({
+export const ImageContext = createContext<{
+  imageCanvas: string;
+  setImageCanvas: (url: string) => void;
+}>({
   imageCanvas: defaultImage,
-  setImageCanvas: (url: string) => {},
+  setImageCanvas: () => {},
 });
 
 export interface ImageOptionsInterface {

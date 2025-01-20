@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import "./Menu.sass";
 import UploadImage from "./components/UploadImage";
 import { ImageOptionsContext, ImageOptionsInterface } from "../../ImageContext";
@@ -14,17 +13,8 @@ const renderingOptions = [
     label: "Tiled",
   },
 ];
-interface MenuProps {
-  // Define your props here
-}
 
-const Menu = (props: MenuProps) => {
-  const [selectedImgOption, setSelectedImgOption] = useState([
-    {
-      value: 1,
-      label: "Original",
-    },
-  ]);
+const Menu = () => {
   const { imageOptions, setImageOptions } = useContext(ImageOptionsContext);
   return (
     <div className="menu">

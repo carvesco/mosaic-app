@@ -2,11 +2,10 @@ import React from "react";
 import "./ImageCanvas.sass";
 import { useEffect, useMemo, useRef, useState, useContext } from "react";
 import { ImageContext, ImageOptionsContext } from "../../ImageContext";
-import { useTexture, OrbitControls } from "@react-three/drei";
+import { useTexture } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import axios from "axios";
-import { RiContrast2Fill } from "react-icons/ri";
 
 interface dimensionsProps {
   width?: number;
@@ -20,16 +19,8 @@ const Scene: React.FC<{
   texture: string;
 }> = ({ vertex, fragment, dimensions, texture }) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const canvas = document.querySelector("canvas");
-  const [imgTexture, setImgTexture] = useState<THREE.Texture | undefined>(
-    useTexture(texture)
-  );
+  const [imgTexture] = useState<THREE.Texture | undefined>(useTexture(texture));
   const { imageOptions } = useContext(ImageOptionsContext);
-
-  const loadTexture = (url: string) => {
-    const loader = new THREE.TextureLoader();
-    return loader.load(url);
-  };
 
   useEffect(() => {
     if (meshRef.current) {
@@ -99,7 +90,7 @@ const Scene: React.FC<{
   );
 };
 const ImageCanvas: React.FC = () => {
-  const { imageCanvas, setImageCanvas } = useContext(ImageContext);
+  const { imageCanvas } = useContext(ImageContext);
   // State variables to store the vertex and fragment shaders as strings
   const [vertex, setVertex] = useState("");
   const [fragment, setFragment] = useState("");
