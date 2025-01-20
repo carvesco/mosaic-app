@@ -37,8 +37,10 @@ const Scene: React.FC<{
         imageOptions.width;
       (meshRef.current.material as THREE.ShaderMaterial).uniforms.resy.value =
         imageOptions.height;
+      (
+        meshRef.current.material as THREE.ShaderMaterial
+      ).uniforms.renderingType.value = imageOptions.rendering.value - 1;
     }
-    console.log(imageOptions.width);
   }, [imageOptions]);
 
   // Load the texture and update the shader uniform
@@ -75,6 +77,10 @@ const Scene: React.FC<{
       resy: {
         type: "f",
         value: imageOptions.height,
+      },
+      renderingType: {
+        type: "f",
+        value: imageOptions.rendering.value - 1,
       },
     }),
     []
@@ -120,7 +126,6 @@ const ImageCanvas: React.FC = () => {
         height: (img.height * 2) / 3,
       });
     };
-    console.log(imageDimensions);
   }, [imageCanvas]);
   if (vertex == "" || fragment == "") return null;
 

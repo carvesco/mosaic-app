@@ -5,13 +5,21 @@ $turquoise: #05dec7ff
 $dartmouth-green: #14662dff
 $vivid-sky-blue: #25e1fdff
 $persian-blue: #1b37bdff
+
+$cerulean: #0081a7ff
+$verdigris: #00afb9ff
+$light-yellow: #fdfcdcff
+$light-orange: #fed9b7ff
+$bittersweet: #f07167ff
+$bittersweet-hover: #ef8f88
+
 .drag-drop
     background: transparent
     border: 1px solid var(--border-color)
     border-radius: 8px
 
 .document-uploader
-    border: 2px dashed $dartmouth-green
+    border: 2px dashed $verdigris
     background-color: transparent
     padding: 10px
     display: flex
@@ -22,7 +30,7 @@ $persian-blue: #1b37bdff
     border-radius: 8px
     cursor: pointer
     &.active
-        border-color: $dartmouth-green
+        border-color: $verdigris
 
 .upload-info
     display: flex
@@ -36,6 +44,7 @@ $persian-blue: #1b37bdff
     p
         margin: 0
         font-size: 16px
+        color: $verdigris
 
     p:first-child
         font-weight: bold
@@ -43,7 +52,7 @@ $persian-blue: #1b37bdff
 .file-list
     display: flex
     flex-direction: column
-    border: 2px solid $dark-pastel-green
+    border: 2px solid $cerulean
     gap: 0.5rem
     width: 100%
     margin-bottom: 1rem
@@ -57,7 +66,7 @@ $persian-blue: #1b37bdff
     justify-content: space-between
     align-items: center
     padding: 0.5rem
-    border: 1px solid var(--border-color)
+    //border: 1px solid 
     border-radius: 8px
 
     .file-info
@@ -87,13 +96,14 @@ $persian-blue: #1b37bdff
     align-items: center
     justify-content: center
     padding: 0.5rem 1rem
-    border: 1px solid $dark-pastel-green
+    border: 1px solid $bittersweet
     border-radius: 8px
     cursor: pointer
-    color: $vivid-sky-blue
-    background-color: $dark-pastel-green
+    color: $light-orange
+    background-color: $bittersweet
     &:hover
-        background-color: $dark-pastel-green
+        background-color: $bittersweet-hover
+        border: 1px solid $bittersweet-hover
 
 .success-file
     display: flex

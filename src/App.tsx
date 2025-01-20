@@ -5,10 +5,18 @@ import Menu from "./components/Menu/Menu";
 import ImageCanvas from "./components/Canvas/ImageCanvas";
 import { ImageContext } from "./ImageContext";
 import { ImageOptionsContext } from "./ImageContext";
+import { render } from "sass";
 
 function App() {
   const [imageCanvas, setImageCanvas] = useState("/1.jpg");
-  const [imageOptions, setImageOptions] = useState({ width: 20, height: 50 });
+  const [imageOptions, setImageOptions] = useState({
+    width: 20,
+    height: 50,
+    rendering: {
+      value: 1,
+      label: "Original",
+    },
+  });
   const value = { imageCanvas, setImageCanvas };
   const optionsValue = { imageOptions, setImageOptions };
 

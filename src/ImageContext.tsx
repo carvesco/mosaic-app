@@ -10,6 +10,10 @@ export const ImageContext = createContext({
 export interface ImageOptionsInterface {
   width: number;
   height: number;
+  rendering: {
+    value: number;
+    label: string;
+  };
 }
 
 export const ImageOptionsContext = createContext<{
@@ -19,6 +23,10 @@ export const ImageOptionsContext = createContext<{
   imageOptions: {
     width: 50,
     height: 50,
+    rendering: {
+      value: 1,
+      label: "Original",
+    },
   },
   setImageOptions: () => {},
 });

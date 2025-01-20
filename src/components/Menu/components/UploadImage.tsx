@@ -62,7 +62,7 @@ const UploadImage: React.FC<UploadImageProps> = ({
         onDragOver={(event) => event.preventDefault()}
       >
         <div className="upload-info">
-          <AiOutlineCloudUpload />
+          <AiOutlineCloudUpload style={{ color: "#00afb9ff" }} />
           <div>
             <p>Drag and drop your Image here</p>
             <p>Supported files: .JPG and .PNG</p>
