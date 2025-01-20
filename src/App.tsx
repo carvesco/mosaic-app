@@ -5,10 +5,11 @@ import Menu from "./components/Menu/Menu";
 import ImageCanvas from "./components/Canvas/ImageCanvas";
 import { ImageContext } from "./ImageContext";
 import { ImageOptionsContext } from "./ImageContext";
-import { render } from "sass";
+import { FaGithub } from "react-icons/fa";
 
 function App() {
   const [imageCanvas, setImageCanvas] = useState("/1.jpg");
+  let currentYear = new Date().getFullYear();
   const [imageOptions, setImageOptions] = useState({
     width: 20,
     height: 50,
@@ -32,6 +33,14 @@ function App() {
           </ImageOptionsContext.Provider>
         </ImageContext.Provider>
       </div>
+      <footer>
+        <p>Developed by CARVESCO &copy; {currentYear}</p>
+        <div>
+          <a href="https://github.com/carvesco/mosaic-app" target="_blank">
+            <FaGithub className="footer-icon" />
+          </a>
+        </div>
+      </footer>
     </>
   );
 }
