@@ -17,6 +17,7 @@ $bittersweet: #f07167ff
     display: flex
     flex-direction: row
     justify-content: space-between
+    align-items: center
     height: 100%
 h2
     color: $cerulean
@@ -24,6 +25,21 @@ h3
     color: $cerulean
 h4
     color: $cerulean
+
+.dimension-input
+    width: 2rem
+    height: 1.5rem
+    background-color: $light-orange
+    color: $cerulean
+    font-weight: 900
+    border: 2px solid $bittersweet
+    border-radius: 2px
+    text-align: center
+.dimension-input:focus
+    border: 3px solid $bittersweet
+    background-color: $light-yellow
+    outline: none
+
 .slider
     background: transparent
     cursor: pointer
@@ -119,3 +135,9 @@ h4
     transform: scale(1)
     opacity: 0
     transition: all 0.4s ease
+.select-rendering
+    .react-dropdown-select-dropdown
+        background-color: $light-orange
+        border: 2px solid $cerulean
+    .react-dropdown-select-item
+        border: 0px solid $cerulean

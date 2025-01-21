@@ -42,7 +42,18 @@ const Menu = () => {
             setImageOptions(newOptions);
           }}
         />
-        <h4>{imageOptions.width}</h4>
+        <input
+          className="dimension-input"
+          type="text"
+          value={imageOptions.width}
+          onChange={(e) => {
+            const newOptions: ImageOptionsInterface = {
+              ...imageOptions,
+              width: Number(e.target.value),
+            };
+            setImageOptions(newOptions);
+          }}
+        />
       </div>
       <div className="dimensions-container">
         <h4>Height</h4>
@@ -61,13 +72,25 @@ const Menu = () => {
             setImageOptions(newOptions);
           }}
         />
-        <h4>{imageOptions.height}</h4>
+        <input
+          className="dimension-input"
+          type="text"
+          value={imageOptions.height}
+          onChange={(e) => {
+            const newOptions: ImageOptionsInterface = {
+              ...imageOptions,
+              height: Number(e.target.value),
+            };
+            setImageOptions(newOptions);
+          }}
+        />
       </div>
       <div>
         <h3>Mosaic Options</h3>
         <h4>Type</h4>
         <Select
           values={[imageOptions.rendering]}
+          className="select-rendering"
           color="#0081a7ff"
           style={{ color: "#0081a7ff", border: "2px solid #00afb9ff" }}
           options={renderingOptions}
@@ -80,7 +103,14 @@ const Menu = () => {
           }}
         />
         <div className="border-checkbox">
-          <h4 style={{ paddingBottom: 1 }}>Borders</h4>
+          <h4
+            style={{
+              paddingBottom: 1,
+              color: imageOptions.rendering.value === 1 ? "#9A9999" : "",
+            }}
+          >
+            Borders
+          </h4>
           <div className="checkbox-wrapper-3">
             <input
               disabled={imageOptions.rendering.value === 1 ? true : false}
