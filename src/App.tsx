@@ -25,7 +25,7 @@ function App() {
 
   return (
     <>
-      <h1 className="app-title">MosaicApp</h1>
+      <h1 className="app-title">MOSAICARV</h1>
       <p>Convert the image you want into a mosaic with different options.</p>
       <div className="menu-canvas-container">
         <ImageContext.Provider value={value}>
