@@ -21,8 +21,15 @@ const Scene: React.FC<{
   const meshRef = useRef<THREE.Mesh>(null);
   const [imgTexture] = useState<THREE.Texture | undefined>(useTexture(texture));
   const { imageOptions } = useContext(ImageOptionsContext);
+  const hexToRgb = (hex: string) => {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return { r: r / 255, g: g / 255, b: b / 255 };
+  };
+
   useEffect(() => {
-    console.log("imageOptions", +imageOptions.borders);
     if (meshRef.current) {
       (meshRef.current.material as THREE.ShaderMaterial).uniforms.resx.value =
         imageOptions.width;
@@ -34,6 +41,14 @@ const Scene: React.FC<{
       (
         meshRef.current.material as THREE.ShaderMaterial
       ).uniforms.borders.value = +imageOptions.borders;
+      (
+        meshRef.current.material as THREE.ShaderMaterial
+      ).uniforms.borderColors.value = new THREE.Vector4(
+        hexToRgb(imageOptions.bordersColor).r,
+        hexToRgb(imageOptions.bordersColor).g,
+        hexToRgb(imageOptions.bordersColor).b,
+        1
+      );
     }
   }, [imageOptions]);
 
@@ -79,6 +94,15 @@ const Scene: React.FC<{
       borders: {
         type: "f",
         value: +imageOptions.borders,
+      },
+      borderColors: {
+        type: "v4",
+        value: new THREE.Vector4(
+          hexToRgb(imageOptions.bordersColor).r,
+          hexToRgb(imageOptions.bordersColor).g,
+          hexToRgb(imageOptions.bordersColor).b,
+          1
+        ),
       },
     }),
     []

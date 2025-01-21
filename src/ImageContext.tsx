@@ -18,6 +18,7 @@ export interface ImageOptionsInterface {
     label: string;
   };
   borders: boolean;
+  bordersColor: string;
 }
 
 export const ImageOptionsContext = createContext<{
@@ -32,6 +33,7 @@ export const ImageOptionsContext = createContext<{
       label: "Original",
     },
     borders: false,
+    bordersColor: "#aabbcc",
   },
   setImageOptions: () => {},
 });

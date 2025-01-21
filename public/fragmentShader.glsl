@@ -3,6 +3,7 @@
 #define res 50.
 #define original 1.
 #define bord 1.
+#define bordcol vec4(0, 0.192, 0.094,1.0) // #00311e
 
 uniform vec2 iResolution;
 uniform float iTime;
@@ -12,6 +13,7 @@ uniform float resx;
 uniform float resy;
 uniform float renderingType;
 uniform float borders;
+uniform vec4 borderColors;
 
 vec2 random2(vec2 p) {
     return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453);
@@ -80,11 +82,16 @@ void main() {
         colt = texture(iChannel0, textCoord);
         if(borders > 0.5) {
             float b = sdBox(fPos, vec2(0.92));
-            colt += step(0.0, b);
+            /* colt += step(0.0, b); */
+            colt = mix(borderColors, colt, 1. - smoothstep(.004, 0.05, b));
         }
     }
     if(renderingType > 1.5) {
         colt = vec4(m_point.rgb, 1.0);
+        if(borders > 0.5) {
+            /* colt += 1. - smoothstep(.004, 0.05, m_dist); */
+            colt = mix(borderColors, colt, smoothstep(.004, 0.05, m_dist));
+        }
     }
     gl_FragColor = vec4(colt);
 }

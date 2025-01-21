@@ -3,6 +3,8 @@ import "./Menu.sass";
 import UploadImage from "./components/UploadImage";
 import { ImageOptionsContext, ImageOptionsInterface } from "../../ImageContext";
 import Select from "react-dropdown-select";
+import { HexColorPicker } from "react-colorful";
+import { Popover, PopoverTrigger, PopoverContent } from "@heroui/popover";
 const renderingOptions = [
   {
     value: 1,
@@ -129,7 +131,43 @@ const Menu = () => {
               <span></span>
             </label>
           </div>
+          <h4
+            style={{
+              paddingBottom: 1,
+              color: imageOptions.rendering.value === 1 ? "#9A9999" : "",
+            }}
+          >
+            Border Color
+          </h4>
+          <Popover placement="bottom" showArrow={true}>
+            <PopoverTrigger>
+              <button
+                disabled={imageOptions.rendering.value === 1 ? true : false}
+                className="color-picker-button"
+                style={{
+                  backgroundColor:
+                    imageOptions.rendering.value === 1 ||
+                    imageOptions.borders === false
+                      ? "#9A9999"
+                      : imageOptions.bordersColor,
+                }}
+              />
+            </PopoverTrigger>
+            <PopoverContent>
+              <HexColorPicker
+                color={imageOptions.bordersColor}
+                onChange={(e) => {
+                  const newOptions: ImageOptionsInterface = {
+                    ...imageOptions,
+                    bordersColor: e,
+                  };
+                  setImageOptions(newOptions);
+                }}
+              />
+            </PopoverContent>
+          </Popover>
         </div>
+        {/* <HexColorPicker color={color} onChange={setColor} />; */}
       </div>
     </div>
   );

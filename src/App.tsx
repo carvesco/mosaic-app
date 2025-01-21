@@ -9,7 +9,7 @@ import { FaGithub } from "react-icons/fa";
 
 function App() {
   const [imageCanvas, setImageCanvas] = useState("/1.jpg");
-  let currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
   const [imageOptions, setImageOptions] = useState({
     width: 50,
     height: 50,
@@ -18,6 +18,7 @@ function App() {
       label: "Original",
     },
     borders: false,
+    bordersColor: "#aabbcc",
   });
   const value = { imageCanvas, setImageCanvas };
   const optionsValue = { imageOptions, setImageOptions };
